@@ -1,21 +1,23 @@
 # Python Project Template
 
-`uv` と `Ruff` を使用した Python プロジェクトのスターターテンプレートです。
+`uv` と `Ruff` を使用した Python プロジェクトのスターターテンプレートです。AIエージェント（Antigravity等）との協調開発に最適化されたガイドラインとカスタムスキルを同梱しています。
 
 ## 🚀 特徴
 
-- **高速なパッケージ管理**: `uv` による高速な依存関係解決とバーチャル環境管理
+- **高速なパッケージ管理**: `uv` による高速な依存関係解決と仮想環境管理
 - **高速なリンター & フォーマッタ**: `Ruff` による統一されたコードスタイルと品質チェック
 - **テスト自動化**: `pytest` 設定済み
 - **VS Code 連携**: 保存時の Ruff 自動フォーマット & インポート整理が設定済み
-- **GitHub Copilot 指示書**: AI 支援開発のためのガイドライン (`.github/copilot-instructions.md`) 同梱
+- **AI エージェント行動規範**: 開発方針やコーディング規約を定めた [`AGENTS.md`](./AGENTS.md) を同梱
+- **エージェントスキル同梱**: Gitコミット自動作成 (`auto-commit`) や README 自動更新 (`write-readme`) スキルをビルトイン
 
 ## 🛠️ 技術スタック
 
-- Python `>= 3.13`
-- [uv](https://github.com/astral-sh/uv) (パッケージ・環境管理)
-- [Ruff](https://github.com/astral-sh/ruff) (リンター / フォーマッタ)
-- [pytest](https://docs.pytest.org/) (テストフレームワーク)
+- **Python**: `>= 3.13`
+- **パッケージ・環境管理**: [uv](https://github.com/astral-sh/uv)
+- **リンター / フォーマッタ**: [Ruff](https://github.com/astral-sh/ruff)
+- **テストフレームワーク**: [pytest](https://docs.pytest.org/)
+- **AI 支援**: Antigravity / Gemini 等のエージェント向け開発規範 & スキル構成
 
 ---
 
@@ -42,6 +44,14 @@ description = "Your description"  # {{PROJECT_DESCRIPTION}} を書き換え
 uv sync
 ```
 
+### 3. 環境変数の設定 (必要に応じて)
+
+環境変数が必要なプロジェクトの場合は、`.env.example` をコピーして `.env` を作成します。
+
+```bash
+cp .env.example .env
+```
+
 ---
 
 ## 💻 開発用コマンド
@@ -62,10 +72,10 @@ uv remove <package_name>
 ### リンター & フォーマッタ (Ruff)
 
 ```bash
-# コードフォーマット
+# コードの自動フォーマット
 uv run ruff format .
 
-# リンターチェック
+# リンターチェック (静的解析)
 uv run ruff check .
 
 # リンターの自動修正
@@ -80,19 +90,34 @@ uv run pytest
 
 ---
 
+## 🤖 AIエージェントとの開発
+
+本テンプレートには、AIコーディングアシスタントとの効率的なペアプログラミングを実現するための設定が組み込まれています。
+
+- **[`AGENTS.md`](./AGENTS.md)**: コーディング規約（型ヒント、GoogleスタイルDocstring、エラーハンドリング等）や意思決定の優先順位を定めた規範ファイルです。
+- **同梱スキル (`.agents/skills/`)**:
+  - `auto-commit`: 作業ツリーの差分を解析し、適切なコミットメッセージでコミットを作成・分割します。
+  - `write-readme`: プロジェクト構成やソースコードを解析し、最新状態に合わせた `README.md` を生成・更新します。
+
+---
+
 ## 📂 ディレクトリ構成
 
 ```text
 .
-├── .github/
-│   └── copilot-instructions.md  # Copilot用の開発指示書
+├── .agents/
+│   └── skills/                  # AIエージェント用カスタムスキル
+│       ├── auto-commit/         # コミット自動作成スキル
+│       └── write-readme/        # README自動生成・更新スキル
 ├── .vscode/
 │   ├── extensions.json          # VS Code 推奨拡張機能
 │   └── settings.json            # VS Code 保存時自動フォーマット設定
 ├── tests/
 │   └── conftest.py              # pytest 用共通設定
+├── .env.example                 # 環境変数設定サンプル
 ├── .gitignore
 ├── .python-version              # Python バージョン指定 (3.13)
+├── AGENTS.md                    # AIエージェントの行動規範・コーディング規約
 ├── pyproject.toml               # プロジェクト定義 & Ruff / pytest 設定
 ├── README.md                    # 本ドキュメント
 └── uv.lock                      # uv ロックファイル
@@ -102,5 +127,5 @@ uv run pytest
 
 ## 👤 Author
 
-- **プロジェクト作成者**: muetaek0321
-- **README 作成**: Gemini 3.6 Flash
+- **プロジェクト作成者**: [muetaek0321](https://github.com/muetaek0321)
+- **README 作成**: Gemini 3.8 Flash
