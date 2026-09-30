@@ -25,12 +25,13 @@ user-invocable: true
    - 変更されたファイルが複数存在する場合、`git diff` や `git status` で変更内容を精査します。
    - 変更内容が異なる関心事（例: BackendとFrontend、機能追加とドキュメント更新、リファクタリングとバグ修正など）に分けられる場合は、一括でコミットせず、関連するファイルごとに `git add` して分割してコミットを作成します。
    - 密接に関連する変更（例: APIエンドポイントの変更とそれを利用するフロントエンド側の型定義の修正など）は、整合性を保つため1つのアトミックなコミットにまとめます。
-3. **エージェント識別情報の記録**:
-   - エージェント（AI）が作成したコミットであることが後から明確に判別できるように、情報を残します。
-   - **タイトルの末尾**: 必ず `【authored-by: <モデル/エージェント名>】`（例: `【authored-by: gemini-3.8-flash】`）を付記します。
-     - 例: `[add] コミット自動作成スキルの追加【authored-by: gemini-3.8-flash】`
-     - 例: `[update] 返答生成クラスにRAG処理を実装【authored-by: gemini-3.8-flash】`
-   - 必要に応じてコミット本文（body）に変更の背景や詳細、および `Co-authored-by: Agent <agent@antigravity>` などを記載します。
+3. **エージェント識別情報の記録 (Git Trailer `Co-authored-by`)**:
+   - エージェント（AI）が作成したコミットであることが判別できるよう、Git の Trailer 機能（`Co-authored-by`）を付与します。
+   - **コミットタイトルにはモデル名を記載せず**、`[<type>] <要約（日本語）>` のクリーンな形式を保ちます（1行要約の可読性と文字数制限を維持するため）。
+   - コミットの Trailer として以下を付与します:
+     - `Co-authored-by: <モデル名> <<モデル識別子>@antigravity>`
+     - 例: `Co-authored-by: Gemini 3.8 Flash <gemini-3.8-flash@antigravity>`
+     - 例: `Co-authored-by: Claude 3.7 Sonnet <claude-3.7-sonnet@antigravity>`
 4. **作業範囲の保護と安全性 (`AGENTS.md` の遵守)**:
    - 秘密情報（`.env`、APIキー等）やビルド成果物、不要な一時ファイルが含まれていないことを確認します。
    - コミット前に、対象領域（`backend` / `frontend`）のリンター・フォーマッター・テストでエラーがないか確認します。
@@ -77,16 +78,16 @@ git log -n 15 --oneline
 
 ### 5. ステージングとコミットの実行
 
-グループごとにファイルをステージングし、規約に沿ったメッセージでコミットを作成します。
+グループごとにファイルをステージングし、規約に沿ったメッセージと Git Trailer（`--trailer`）を指定してコミットを作成します。
 
 ```bash
 # グループ1
 git add <対象ファイル群>
-git commit -m "[<type>] <要約（日本語）>【authored-by: <モデル/エージェント名>】"
+git commit -m "[<type>] <要約（日本語）>" --trailer "Co-authored-by=<モデル名> <<モデル識別子>@antigravity>"
 
 # グループ2（分割が必要な場合）
 git add <対象ファイル群>
-git commit -m "[<type>] <要約（日本語）>【authored-by: <モデル/エージェント名>】"
+git commit -m "[<type>] <要約（日本語）>" --trailer "Co-authored-by=<モデル名> <<モデル識別子>@antigravity>"
 ```
 
 ### 6. コミット結果の確認と報告
@@ -101,16 +102,20 @@ git log -n 5 --oneline
 
 ## コミットメッセージの作成例
 
-- 新規スキルや機能を追加した場合:
-  - `[add] コミット自動作成スキルを追加【authored-by: GPT-5.6-Terra】`
-  - `[add] チャット履歴のエクスポート機能を追加【authored-by: GPT-5.6-Terra】`
-- 既存機能を改修・アップデートした場合:
-  - `[update] 返答生成中にSendアイコンに被せてサークルプログレスを表示するように改修【authored-by: Claude-Opus-4.6】`
-  - `[update] Geminiのモデル自動選択処理のエラーハンドリングを強化【authored-by: Claude-Opus-4.6】`
-- コードの整理・リファクタリングの場合:
-  - `[refactor] チャット画面のコンポーネント構造を整理【authored-by: gemini-3.8-flash】`
-- 不具合を修正した場合:
-  - `[fix] ストリーミング受信時の改行コード処理の不具合を修正【authored-by: gemini-3.8-flash】`
+コミットタイトルはクリーンに保ち、Trailer（`Co-authored-by`）を付与します。
+
+- **新規スキルや機能を追加した場合:**
+  - コミットタイトル: `[add] コミット自動作成スキルを追加`
+  - Trailer: `Co-authored-by: Gemini 3.8 Flash <gemini-3.8-flash@antigravity>`
+- **既存機能を改修・アップデートした場合:**
+  - コミットタイトル: `[update] 返答生成中にSendアイコンに被せてサークルプログレスを表示するように改修`
+  - Trailer: `Co-authored-by: Claude 3.7 Sonnet <claude-3.7-sonnet@antigravity>`
+- **コードの整理・リファクタリングの場合:**
+  - コミットタイトル: `[refactor] チャット画面のコンポーネント構造を整理`
+  - Trailer: `Co-authored-by: Gemini 3.8 Flash <gemini-3.8-flash@antigravity>`
+- **不具合を修正した場合:**
+  - コミットタイトル: `[fix] ストリーミング受信時の改行コード処理の不具合を修正`
+  - Trailer: `Co-authored-by: Gemini 3.8 Flash <gemini-3.8-flash@antigravity>`
 
 ---
 
