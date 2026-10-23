@@ -9,7 +9,7 @@
 - **テスト自動化**: `pytest` 設定済み
 - **VS Code 連携**: 保存時の Ruff 自動フォーマット & インポート整理が設定済み
 - **AI エージェント行動規範**: 開発方針やコーディング規約を定めた [`AGENTS.md`](./AGENTS.md) を同梱
-- **エージェントスキル同梱**: Gitコミット自動作成 (`auto-commit`) や README 自動更新 (`write-readme`) スキルをビルトイン
+- **エージェントスキル同梱**: Gitコミット自動作成 (`auto-commit`)、技術的負債の調査・監査 (`technical-debt-audit`)、README 自動更新 (`write-readme`) スキルをビルトイン
 
 ## 🛠️ 技術スタック
 
@@ -97,6 +97,7 @@ uv run pytest
 - **[`AGENTS.md`](./AGENTS.md)**: コーディング規約（型ヒント、GoogleスタイルDocstring、エラーハンドリング等）や意思決定の優先順位を定めた規範ファイルです。
 - **同梱スキル (`.agents/skills/`)**:
   - `auto-commit`: 作業ツリーの差分を解析し、適切なコミットメッセージでコミットを作成・分割します。
+  - `technical-debt-audit`: ソースコード、テスト、設定、依存関係を読み取り専用で調査し、技術的負債の根拠・影響・優先度・改善案をレポートします。
   - `write-readme`: プロジェクト構成やソースコードを解析し、最新状態に合わせた `README.md` を生成・更新します。
 
 ---
@@ -108,6 +109,7 @@ uv run pytest
 ├── .agents/
 │   └── skills/                  # AIエージェント用カスタムスキル
 │       ├── auto-commit/         # コミット自動作成スキル
+│       ├── technical-debt-audit/ # 技術的負債監査・レポートスキル
 │       └── write-readme/        # README自動生成・更新スキル
 ├── .vscode/
 │   ├── extensions.json          # VS Code 推奨拡張機能
