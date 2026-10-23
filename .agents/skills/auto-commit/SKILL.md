@@ -29,9 +29,9 @@ user-invocable: true
    - エージェント（AI）が作成したコミットであることが判別できるよう、Git の Trailer 機能（`Co-authored-by`）を付与します。
    - **コミットタイトルにはモデル名を記載せず**、`[<type>] <要約（日本語）>` のクリーンな形式を保ちます（1行要約の可読性と文字数制限を維持するため）。
    - コミットの Trailer として以下を付与します:
-     - `Co-authored-by: <モデル名> <<モデル識別子>@antigravity>`
+     - `Co-authored-by: <モデル名> <<モデル識別子>@<エージェント名>>`
      - 例: `Co-authored-by: Gemini 3.8 Flash <gemini-3.8-flash@antigravity>`
-     - 例: `Co-authored-by: Claude 3.7 Sonnet <claude-3.7-sonnet@antigravity>`
+     - 例: `Co-authored-by: Claude 3.7 Sonnet <claude-3.7-sonnet@github-copilot>`
 4. **作業範囲の保護と安全性 (`AGENTS.md` の遵守)**:
    - 秘密情報（`.env`、APIキー等）やビルド成果物、不要な一時ファイルが含まれていないことを確認します。
    - コミット前に、対象領域（`backend` / `frontend`）のリンター・フォーマッター・テストでエラーがないか確認します。
