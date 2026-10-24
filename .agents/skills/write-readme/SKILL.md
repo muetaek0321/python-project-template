@@ -57,6 +57,9 @@ Pythonリポジトリの設定ファイル、ディレクトリ構造、ソー�
 4. **プロジェクト作成者（Author）情報の取得**:
    - `git config user.name` を実行して作成者名を取得。
    - `pyproject.toml` の `authors` 欄も確認。
+5. **バッジ用情報の確認**:
+   - `git remote get-url origin` 等でGitHubリポジトリ（owner/repo）情報の有無を確認（CIバッジ・リポジトリリンク用）。
+   - `pyproject.toml`（Pythonバージョン、パッケージ管理、主要ライブラリ）、`.github/workflows/`（CI設定）、`LICENSE` ファイルの有無を確認。
 
 ---
 
@@ -74,6 +77,35 @@ Pythonリポジトリの設定ファイル、ディレクトリ構造、ソー�
 
 ---
 
+## 🛡️ バッジ（Badges）の付与指針
+
+READMEの作成・更新時は、プロジェクトの技術スタックやステータスを一目で把握できるよう、**タイトルの説明（プロジェクト名および一行要約・キャッチコピー）の直下**にバッジを配置します。
+
+### 1. 配置位置
+プロジェクト名（`# 見出し`）とその直下の説明文（一行要約・キャッチコピー）の後に空行を1行空けてバッジを横並びで配置します。
+
+### 2. 推奨バッジ一覧と生成ルール
+プロジェクトの事前調査結果に基づき、実在・導入されているツールや設定に応じたバッジ（Shields.io形式等）を付与します。
+
+| カテゴリ | 対象ツール / 項目 | バッジ記法例 / URL |
+| :--- | :--- | :--- |
+| **Pythonバージョン** | `requires-python` | `[![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/)` |
+| **パッケージ管理** | `uv` | `[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)` |
+| | `poetry` | `[![Poetry](https://img.shields.io/badge/poetry-package-blue)](https://python-poetry.org/)` |
+| **リンター / フォーマッタ** | `Ruff` | `[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)` |
+| | `Black` | `[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)` |
+| **型チェック** | `mypy` | `[![Checked with mypy](https://img.shields.io/badge/mypy-checked-blue)](https://mypy-lang.org/)` |
+| **テスト / CI** | GitHub Actions (`.github/workflows/*.yml`) | `[![CI](https://github.com/<owner>/<repo>/actions/workflows/<workflow>.yml/badge.svg)](https://github.com/<owner>/<repo>/actions)` |
+| **主要フレームワーク** | FastAPI | `[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)` |
+| | その他主要FW / ライブラリ | 必要に応じて Shields.io の公式または汎用バッジ |
+| **ライセンス** | `LICENSE` ファイル | `[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)` |
+
+### 3. バッジ付与の注意事項
+- **事実ベース（実在するもののみ）**: CIワークフローが存在しない場合や、GitHubリモート情報が取得できない場合は架空のCIバッジを付与しないでください。
+- **過剰な装飾を避ける**: 視認性を重視し、主要な技術スタック・品質・ライセンスに絞り、横並びで1〜2行程度（4〜7個程度）に収めます。
+
+---
+
 ## 📝 `README.md` の構成案
 
 プロジェクト種別に応じて必要なセクションを選択・調整して構成します。
@@ -82,6 +114,12 @@ Pythonリポジトリの設定ファイル、ディレクトリ構造、ソー�
 # [プロジェクト名]
 
 [プロジェクトの一行要約・キャッチコピー]
+
+<!-- タイトルの説明の直下にバッジを配置 -->
+[![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 🚀 特徴
 - [特徴1: 例: uv による高速な環境管理と依存関係解決]
@@ -213,6 +251,7 @@ uv run pytest
 ## 🎨 出力スタイル要件
 
 - **見出しと絵文字**: 各セクション見出しに適度な絵文字（🚀, 🛠️, 📋, 🏁, 💻, 📂, 👤 等）を配置し、視認性を高めます。
+- **バッジの配置**: タイトルと説明文の直下に、プロジェクトの主要スタック（Pythonバージョン、パッケージ管理、リンター/フォーマッター、ライセンス等）を表すバッジを配置します。
 - **シンタックスハイライト**: コードブロックには必ず適切な言語タグ（`bash`, `toml`, `text`, `python` 等）を指定します。
 - **パッケージマネージャーの整合性**:
    - `uv` が導入されている場合は `uv` を優先。

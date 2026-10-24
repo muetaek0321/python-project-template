@@ -2,6 +2,10 @@
 
 `uv` と `Ruff` を使用した Python プロジェクトのスターターテンプレートです。AIエージェント（Antigravity等）との協調開発に最適化されたガイドラインとカスタムスキルを同梱しています。
 
+[![Python Version](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+
 ## 🚀 特徴
 
 - **高速なパッケージ管理**: `uv` による高速な依存関係解決と仮想環境管理
@@ -19,11 +23,14 @@
 - **テストフレームワーク**: [pytest](https://docs.pytest.org/)
 - **AI 支援**: Antigravity / Gemini 等のエージェント向け開発規範 & スキル構成
 
----
+## 📋 前提条件
 
-## 📋 使い方
+- Python 3.13 以上
+- [uv](https://docs.astral.sh/uv/)
 
-### 1. テンプレートから新規プロジェクトを作成
+## 🏁 使い方 (Getting Started)
+
+### 1. プロジェクトの初期設定
 
 このテンプレートからプロジェクトを作成したら、まず `pyproject.toml` 内のプレースホルダーを実際のプロジェクト情報に書き換えてください。
 
@@ -51,8 +58,6 @@ uv sync
 ```bash
 cp .env.example .env
 ```
-
----
 
 ## 💻 開発用コマンド
 
@@ -88,8 +93,6 @@ uv run ruff check --fix .
 uv run pytest
 ```
 
----
-
 ## 🤖 AIエージェントとの開発
 
 本テンプレートには、AIコーディングアシスタントとの効率的なペアプログラミングを実現するための設定が組み込まれています。
@@ -99,8 +102,6 @@ uv run pytest
   - `auto-commit`: 作業ツリーの差分を解析し、適切なコミットメッセージでコミットを作成・分割します。
   - `technical-debt-audit`: ソースコード、テスト、設定、依存関係を読み取り専用で調査し、技術的負債の根拠・影響・優先度・改善案をレポートします。
   - `write-readme`: プロジェクト構成やソースコードを解析し、最新状態に合わせた `README.md` を生成・更新します。
-
----
 
 ## 📂 ディレクトリ構成
 
@@ -124,8 +125,6 @@ uv run pytest
 ├── README.md                    # 本ドキュメント
 └── uv.lock                      # uv ロックファイル
 ```
-
----
 
 ## 👤 Author
 
